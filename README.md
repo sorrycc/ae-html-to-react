@@ -13,7 +13,7 @@ $ yarn global add ae-html-to-react
 ## Usage
 
 ```bash
-$ ae-html-to-react --file /path/to/html/file --target /path/to/component --apiId xxx --masterKey xxx 
+$ ae-html-to-react --file /path/to/html/file --target /path/to/component --appId xxx --masterKey xxx 
 ```
 
 ## Options
@@ -26,7 +26,7 @@ AE 产出的 HTML 文件，CSS 会自动查找。
 
 目标组件目录，比如 /path/to/project/src/components/FooBar 。
 
-### apiId
+### appId
 
 basement 上申请。
 
