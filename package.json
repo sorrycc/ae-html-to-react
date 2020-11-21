@@ -1,0 +1,29 @@
+{
+  "name": "ae-html-to-react",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "bin": {
+    "ae-html-to-react": "cli.js"
+  },
+  "files": [
+    "dist",
+    "cli.js"
+  ],
+  "scripts": {
+    "dev": "tsc -w --incremental --p src",
+    "build": "rimraf dist && tsc -p src"
+  },
+  "dependencies": {
+    "@alipay/basement": "^3.5.0",
+    "mkdirp": "^1.0.4",
+    "postcss": "^8.1.8",
+    "urllib": "^2.36.1",
+    "yargs-parser": "^20.2.4"
+  },
+  "devDependencies": {
+    "@types/mkdirp": "^1.0.1",
+    "@types/node": "^14.14.9",
+    "prettier": "^2.2.0",
+    "rimraf": "^3.0.2"
+  }
+}
