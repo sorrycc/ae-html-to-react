@@ -37,9 +37,9 @@ export async function transformJS(opts: {
   componentName: string;
 }) {
   const content = readFileSync(opts.file, 'utf-8');
-  const m = content.match(/<body>([\s\S]+?)<\/body>/);
+  const m = content.match(/<body>([\s\S]+)<\/body>/);
   if (m && m[1]) {
-    const body = m[1].split('\n').map((line) => {
+    const body = m[1].split(/[\r\n]/).map((line) => {
       line.match(/class=""/);
       return line
         .replace(/\sclass=\"(.+?)\"/, (a, b) => {
@@ -114,8 +114,11 @@ export async function transformCSS(opts: {
               }
             }
           }
-          console.log(`添加 background-size: contain;`);
+          console.log(
+            `添加 background-size: contain; 和 uc-perf-stat-ignore: image;`,
+          );
           decl.after(`background-size: contain;`);
+          decl.after(`uc-perf-stat-ignore: image;`);
         }
         if (opts.animKey && decl.type === 'decl' && decl.prop === 'animation') {
           decl.value = decl.value.replace('BX_AniKey', opts.animKey);
