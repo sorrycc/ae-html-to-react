@@ -94,7 +94,7 @@ export async function transformCSS(opts: {
       for (const decl of node.nodes) {
         if (
           decl.type === 'decl' &&
-          decl.prop === 'background' &&
+          (decl.prop === 'background' || decl.prop === 'background-image') &&
           decl.value.startsWith('url(')
         ) {
           console.log(`处理背景图规则：${decl.value}`);
@@ -129,8 +129,8 @@ export async function transformCSS(opts: {
           console.log(
             `添加 background-size: contain; 和 uc-perf-stat-ignore: image;`,
           );
-          decl.after(`background-size: contain;`);
           decl.after(`uc-perf-stat-ignore: image;`);
+          decl.after(`background-size: contain;`);
         }
         if (opts.animKey && decl.type === 'decl' && decl.prop === 'animation') {
           decl.value = decl.value.replace('BX_AniKey', opts.animKey);
