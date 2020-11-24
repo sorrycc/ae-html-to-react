@@ -88,6 +88,7 @@ export async function transformCSS(opts: {
   // 2. 压缩图片
   // 3. 自动上传图片文件
   // 4. 修改 Anim Name
+  const imageCache: any = {};
   for (const node of root.nodes) {
     if (node.type === 'rule' && node.nodes) {
       for (const decl of node.nodes) {
@@ -104,16 +105,24 @@ export async function transformCSS(opts: {
               console.log(`处理背景图：${image}`);
               const file = join(dirname(opts.file), image);
               console.log(`上传图片: ${file}`);
-              const res: any = await uploadImage({
-                file,
-                appId: opts.uploadImages.appId,
-                masterKey: opts.uploadImages.masterKey,
-              });
-              if (res && res.url) {
-                console.log(`图片上传成功: ${res.url}`);
+              let res: any;
+              if (imageCache[file]) {
+                console.log('图片已存在于缓存中');
+                res = imageCache[file];
                 decl.value = `url(${res.url})`;
               } else {
-                console.error(`图片上传失败`);
+                res = await uploadImage({
+                  file,
+                  appId: opts.uploadImages.appId,
+                  masterKey: opts.uploadImages.masterKey,
+                });
+                if (res && res.url) {
+                  imageCache[file] = res;
+                  console.log(`图片上传成功: ${res.url}`);
+                  decl.value = `url(${res.url})`;
+                } else {
+                  console.error(`图片上传失败`);
+                }
               }
             }
           }
