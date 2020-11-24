@@ -24,10 +24,13 @@ export default async function (opts: {
   const css = await transformCSS({
     file: cssFile,
     animKey: `${componentName}Key`,
-    uploadImages: {
-      appId: opts.appId,
-      masterKey: opts.masterKey,
-    },
+    ...(opts.appId &&
+      opts.masterKey && {
+        uploadImages: {
+          appId: opts.appId,
+          masterKey: opts.masterKey,
+        },
+      }),
   });
   writeFileSync(join(opts.target, 'index.less'), css, 'utf-8');
 }
