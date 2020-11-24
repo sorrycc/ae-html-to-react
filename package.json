@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "dev": "tsc -w --incremental --p src",
-    "build": "rimraf dist && tsc -p src"
+    "build": "rimraf dist && tsc -p src",
+    "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish"
   },
   "dependencies": {
     "@alipay/basement": "^3.5.0",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@types/mkdirp": "^1.0.1",
     "@types/node": "^14.14.9",
+    "np": "^7.0.0",
     "prettier": "^2.2.0",
     "rimraf": "^3.0.2"
   }
